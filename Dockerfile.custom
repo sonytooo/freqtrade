@@ -1,0 +1,10 @@
+# Build on top of the official stable image - the recommended approach per freqtrade docs
+FROM freqtradeorg/freqtrade:stable
+
+# Install additional pip packages required by the custom strategies.
+# ta-lib Python wrapper (C library is pre-built in the base image),
+# pandas-ta (used by MidTF_VWAP_Strategy), and technical (freqtrade helper).
+RUN pip install --user --no-cache-dir \
+    ta-lib==0.6.8 \
+    ft-pandas-ta==0.3.16 \
+    technical==1.6.0

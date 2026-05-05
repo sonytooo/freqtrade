@@ -29,28 +29,28 @@ Please read the [exchange-specific notes](https://www.freqtrade.io/en/stable/exc
 
 ### Supported Spot Exchanges
 
-- [X] [Binance](https://www.binance.com/)
-- [X] [BingX](https://bingx.com/invite/0EM9RX)
-- [X] [Bitget](https://www.bitget.com/)
-- [X] [Bitmart](https://bitmart.com/)
-- [X] [Bybit](https://bybit.com/)
-- [X] [Gate.io](https://www.gate.io/ref/6266643)
-- [X] [HTX](https://www.htx.com/)
-- [X] [Hyperliquid](https://hyperliquid.xyz/) (A decentralized exchange, or DEX)
-- [X] [Kraken](https://kraken.com/)
-- [X] [OKX](https://okx.com/)
-- [X] [MyOKX](https://okx.com/) (OKX EEA)
+- [x] [Binance](https://www.binance.com/)
+- [x] [BingX](https://bingx.com/invite/0EM9RX)
+- [x] [Bitget](https://www.bitget.com/)
+- [x] [Bitmart](https://bitmart.com/)
+- [x] [Bybit](https://bybit.com/)
+- [x] [Gate.io](https://www.gate.io/ref/6266643)
+- [x] [HTX](https://www.htx.com/)
+- [x] [Hyperliquid](https://hyperliquid.xyz/) (A decentralized exchange, or DEX)
+- [x] [Kraken](https://kraken.com/)
+- [x] [OKX](https://okx.com/)
+- [x] [MyOKX](https://okx.com/) (OKX EEA)
 - [ ] [potentially many others](https://github.com/ccxt/ccxt/). _(We cannot guarantee they will work)_
 
 ### Supported Futures Exchanges
 
-- [X] [Binance](https://www.binance.com/)
-- [X] [Bitget](https://www.bitget.com/)
-- [X] [Gate.io](https://www.gate.io/ref/6266643)
-- [X] [Hyperliquid](https://hyperliquid.xyz/) (A decentralized exchange, or DEX)
-- [X] [OKX](https://okx.com/)
-- [X] [Bybit](https://bybit.com/)
-- [X] [Kraken](https://www.kraken.com/features/futures)
+- [x] [Binance](https://www.binance.com/)
+- [x] [Bitget](https://www.bitget.com/)
+- [x] [Gate.io](https://www.gate.io/ref/6266643)
+- [x] [Hyperliquid](https://hyperliquid.xyz/) (A decentralized exchange, or DEX)
+- [x] [OKX](https://okx.com/)
+- [x] [Bybit](https://bybit.com/)
+- [x] [Kraken](https://www.kraken.com/features/futures)
 
 Please make sure to read the [exchange specific notes](https://www.freqtrade.io/en/stable/exchanges/), as well as the [trading with leverage](https://www.freqtrade.io/en/stable/leverage/) documentation before diving in.
 
@@ -58,8 +58,8 @@ Please make sure to read the [exchange specific notes](https://www.freqtrade.io/
 
 Exchanges confirmed working by the community:
 
-- [X] [Bitvavo](https://bitvavo.com/)
-- [X] [Kucoin](https://www.kucoin.com/)
+- [x] [Bitvavo](https://bitvavo.com/)
+- [x] [Kucoin](https://www.kucoin.com/)
 
 ## Documentation
 
@@ -74,7 +74,7 @@ Please find the complete documentation on the [freqtrade website](https://www.fr
 - [x] **Dry-run**: Run the bot without paying money.
 - [x] **Backtesting**: Run a simulation of your buy/sell strategy.
 - [x] **Strategy Optimization by machine learning**: Use machine learning to optimize your buy/sell strategy parameters with real exchange data.
-- [X] **Adaptive prediction modeling**: Build a smart strategy with FreqAI that self-trains to the market via adaptive machine learning methods. [Learn more](https://www.freqtrade.io/en/stable/freqai/)
+- [x] **Adaptive prediction modeling**: Build a smart strategy with FreqAI that self-trains to the market via adaptive machine learning methods. [Learn more](https://www.freqtrade.io/en/stable/freqai/)
 - [x] **Whitelist crypto-currencies**: Select which crypto-currency you want to trade or use dynamic whitelists.
 - [x] **Blacklist crypto-currencies**: Select which crypto-currency you want to avoid.
 - [x] **Builtin WebUI**: Builtin web UI to manage your bot.
@@ -161,7 +161,6 @@ Telegram is not mandatory. However, this is a great way to control your bot. Mor
 - `/help`: Show help message.
 - `/version`: Show version.
 
-
 ## Development branches
 
 The project is currently setup in two main branches:
@@ -209,7 +208,7 @@ to understand the requirements before sending your pull-requests.
 Coding is not a necessity to contribute - maybe start with improving the documentation?
 Issues labeled [good first issue](https://github.com/freqtrade/freqtrade/labels/good%20first%20issue) can be good first contributions, and will help get you familiar with the codebase.
 
-**Note** before starting any major new feature work, *please open an issue describing what you are planning to do* or talk to us on [discord](https://discord.gg/p7nuUNVfP7) (please use the #dev channel for this). This will ensure that interested parties can give valuable feedback on the feature, and let others know that you are working on it.
+**Note** before starting any major new feature work, _please open an issue describing what you are planning to do_ or talk to us on [discord](https://discord.gg/p7nuUNVfP7) (please use the #dev channel for this). This will ensure that interested parties can give valuable feedback on the feature, and let others know that you are working on it.
 
 **Important:** Always create your PR against the `develop` branch, not `stable`.
 
@@ -233,3 +232,19 @@ To run this bot we recommend you a cloud instance with a minimum of:
 - [TA-Lib](https://ta-lib.github.io/ta-lib-python/)
 - [virtualenv](https://virtualenv.pypa.io/en/stable/installation.html) (Recommended)
 - [Docker](https://www.docker.com/products/docker) (Recommended)
+
+docker compose up -d \
+ freqtrade-perps \
+ freqtrade-perps-vwap \
+ freqtrade-perps-macd-rsi \
+ freqtrade-perps-bollinger \
+ freqtrade-perps-ema-adx \
+ freqtrade-ai-mid-tf
+
+docker compose up -d \
+ freqtrade-spot \
+ freqtrade-spot-macd-rsi \
+ freqtrade-spot-bollinger \
+ freqtrade-spot-ema-adx \
+ freqtrade-spot-vwap \
+ freqtrade-ai-mid-tf

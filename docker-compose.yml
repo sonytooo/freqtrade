@@ -1,7 +1,16 @@
 ---
 services:
+  # ─────────────────────────────────────────────────
+  # SPOT BOTS (custom image with ta-lib + pandas-ta)
+  # ─────────────────────────────────────────────────
+
   freqtrade-spot:
-    image: freqtradeorg/freqtrade:stable
+    # Builds Dockerfile.custom (extends freqtradeorg/freqtrade:stable).
+    # The image tag is shared by all spot services so it only builds once.
+    build:
+      context: .
+      dockerfile: Dockerfile.custom
+    image: freqtrade_custom
     restart: unless-stopped
     container_name: freqtrade-spot
     volumes:
@@ -15,8 +24,80 @@ services:
       --config /freqtrade/user_data/config_spot.json
       --strategy SampleStrategy
 
+  freqtrade-spot-macd-rsi:
+    image: freqtrade_custom
+    restart: unless-stopped
+    container_name: freqtrade-spot-macd-rsi
+    volumes:
+      - "./user_data:/freqtrade/user_data"
+    ports:
+      - "127.0.0.1:8084:8084"
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_spot_macd_rsi.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_spot_macd_rsi.sqlite
+      --config /freqtrade/user_data/config_spot_macd_rsi.json
+      --strategy MidTF_MACD_RSI_Strategy_Spot
+    depends_on:
+      - freqtrade-spot
+
+  freqtrade-spot-bollinger:
+    image: freqtrade_custom
+    restart: unless-stopped
+    container_name: freqtrade-spot-bollinger
+    volumes:
+      - "./user_data:/freqtrade/user_data"
+    ports:
+      - "127.0.0.1:8085:8085"
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_spot_bollinger.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_spot_bollinger.sqlite
+      --config /freqtrade/user_data/config_spot_bollinger.json
+      --strategy MidTF_Bollinger_Breakout_Strategy_Spot
+    depends_on:
+      - freqtrade-spot
+
+  freqtrade-spot-ema-adx:
+    image: freqtrade_custom
+    restart: unless-stopped
+    container_name: freqtrade-spot-ema-adx
+    volumes:
+      - "./user_data:/freqtrade/user_data"
+    ports:
+      - "127.0.0.1:8086:8086"
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_spot_ema_adx.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_spot_ema_adx.sqlite
+      --config /freqtrade/user_data/config_spot_ema_adx.json
+      --strategy MidTF_EMA_ADX_Strategy_Spot
+    depends_on:
+      - freqtrade-spot
+
+  freqtrade-spot-vwap:
+    image: freqtrade_custom
+    restart: unless-stopped
+    container_name: freqtrade-spot-vwap
+    volumes:
+      - "./user_data:/freqtrade/user_data"
+    ports:
+      - "127.0.0.1:8087:8087"
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_spot_vwap.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_spot_vwap.sqlite
+      --config /freqtrade/user_data/config_spot_vwap.json
+      --strategy MidTF_VWAP_Strategy_Spot
+    depends_on:
+      - freqtrade-spot
+
+  # ─────────────────────────────────────────────────
+  # PERPS BOTS (long + short via futures/isolated)
+  # ─────────────────────────────────────────────────
+
   freqtrade-perps:
-    image: freqtradeorg/freqtrade:stable
+    image: freqtrade_custom
     restart: unless-stopped
     container_name: freqtrade-perps
     volumes:
@@ -29,3 +110,112 @@ services:
       --db-url sqlite:////freqtrade/user_data/tradesv3_perps.sqlite
       --config /freqtrade/user_data/config_perps.json
       --strategy SampleStrategy
+    depends_on:
+      - freqtrade-spot
+
+  freqtrade-perps-vwap:
+    image: freqtrade_custom
+    restart: unless-stopped
+    container_name: freqtrade-perps-vwap
+    volumes:
+      - "./user_data:/freqtrade/user_data"
+    ports:
+      - "127.0.0.1:8088:8088"
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_perps_vwap.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_perps_vwap.sqlite
+      --config /freqtrade/user_data/config_perps_vwap.json
+      --strategy MidTF_VWAP_Strategy_Perps
+    depends_on:
+      - freqtrade-spot
+
+  freqtrade-perps-macd-rsi:
+    image: freqtrade_custom
+    restart: unless-stopped
+    container_name: freqtrade-perps-macd-rsi
+    volumes:
+      - "./user_data:/freqtrade/user_data"
+    ports:
+      - "127.0.0.1:8089:8089"
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_perps_macd_rsi.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_perps_macd_rsi.sqlite
+      --config /freqtrade/user_data/config_perps_macd_rsi.json
+      --strategy MidTF_MACD_RSI_Strategy_Perps
+    depends_on:
+      - freqtrade-spot
+
+  freqtrade-perps-bollinger:
+    image: freqtrade_custom
+    restart: unless-stopped
+    container_name: freqtrade-perps-bollinger
+    volumes:
+      - "./user_data:/freqtrade/user_data"
+    ports:
+      - "127.0.0.1:8090:8090"
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_perps_bollinger.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_perps_bollinger.sqlite
+      --config /freqtrade/user_data/config_perps_bollinger.json
+      --strategy MidTF_Bollinger_Breakout_Strategy_Perps
+    depends_on:
+      - freqtrade-spot
+
+  freqtrade-perps-ema-adx:
+    image: freqtrade_custom
+    restart: unless-stopped
+    container_name: freqtrade-perps-ema-adx
+    volumes:
+      - "./user_data:/freqtrade/user_data"
+    ports:
+      - "127.0.0.1:8091:8091"
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_perps_ema_adx.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_perps_ema_adx.sqlite
+      --config /freqtrade/user_data/config_perps_ema_adx.json
+      --strategy MidTF_EMA_ADX_Strategy_Perps
+    depends_on:
+      - freqtrade-spot
+
+  # ─────────────────────────────────────────────────
+  # FREQAI BOT (dedicated freqai image)
+  # ─────────────────────────────────────────────────
+
+  freqtrade-ai-mid-tf:
+    # FreqAI requires the dedicated image which ships with LightGBM, scikit-learn, etc.
+    image: freqtradeorg/freqtrade:stable_freqai
+    restart: unless-stopped
+    container_name: freqtrade-ai-mid-tf
+    volumes:
+      - "./user_data:/freqtrade/user_data"
+    ports:
+      - "127.0.0.1:8083:8083"
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_ai_mid_tf.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_ai_mid_tf.sqlite
+      --config /freqtrade/user_data/config_ai_mid_tf.json
+      --strategy MidTF_FreqAI_Strategy
+    depends_on:
+      - freqtrade-spot
+
+  freqtrade-stan-metals-perps:
+    image: freqtrade_custom
+    restart: unless-stopped
+    container_name: freqtrade-stan-metals-perps
+    volumes:
+      - "./user_data:/freqtrade/user_data"
+    ports:
+      - "127.0.0.1:8092:8092"
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_stan_metals_perps.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_stan_metals_perps.sqlite
+      --config /freqtrade/user_data/config_stan_metals_perps.json
+      --strategy Stan_Strategy_Perps_Metals
+    depends_on:
+      - freqtrade-spot

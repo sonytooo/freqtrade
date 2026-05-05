@@ -1,93 +1,112 @@
 {
-    "max_open_trades": 2,
-    "stake_currency": "USDC",
-    "stake_amount": "unlimited",
-    "tradable_balance_ratio": 0.99,
-    "fiat_display_currency": "USD",
-    "timeframe": "4h",
-    "dry_run": true,
-    "cancel_open_orders_on_exit": false,
-    "unfilledtimeout": {
-        "entry": 10,
-        "exit": 10,
-        "exit_timeout_count": 0,
-        "unit": "minutes"
-    },
-    "entry_pricing": {
-        "price_side": "same",
-        "use_order_book": true,
-        "order_book_top": 1,
-        "price_last_balance": 0.0,
-        "check_depth_of_market": {
-            "enabled": false,
-            "bids_to_ask_delta": 1
-        }
-    },
-    "exit_pricing": {
-        "price_side": "same",
-        "use_order_book": true,
-        "order_book_top": 1
-    },
-    "exchange": {
-        "name": "binance",
-        "key": "",
-        "secret": "",
-        "ccxt_config": {},
-        "ccxt_async_config": {},
-        "pair_whitelist": [
-            "BTC/USDC",
-            "ETH/USDC"
-        ],
-        "pair_blacklist": []
-    },
-    "pairlists": [
-        {
-            "method": "StaticPairList"
-        }
-    ],
-    "freqaimodel": "LightGBMClassifier",
-    "freqai": {
-        "enabled": true,
-        "purge_old_models": 2,
-        "train_period_days": 60,
-        "backtest_period_days": 15,
-        "live_retrain_hours": 24,
-        "identifier": "mid_tf_classifier",
-        "feature_parameters": {
-            "include_timeframes": [
-                "4h",
-                "1d"
-            ],
-            "include_corr_pairlist": [
-                "BTC/USDC",
-                "ETH/USDC"
-            ],
-            "label_period_candles": 12,
-            "include_shifted_candles": 3,
-            "DI_threshold": 0.95,
-            "weight_factor": 0.9,
-            "principal_component_analysis": false,
-            "use_SVM_to_remove_outliers": true,
-            "indicator_periods_candles": [
-                10,
-                20,
-                50
-            ],
-            "plot_feature_importances": 0
-        },
-        "data_split_parameters": {
-            "test_size": 0.25,
-            "random_state": 42
-        },
-        "model_training_parameters": {
-            "n_estimators": 500,
-            "learning_rate": 0.05
-        }
-    },
-    "bot_name": "mid_tf_bot",
-    "initial_state": "running",
-    "force_entry_enable": false,
-    "internals": {
-        "process_throttle_secs": 5
+  "$schema": "https://schema.freqtrade.io/schema.json",
+  "max_open_trades": 2,
+  "stake_currency": "USDT",
+  "stake_amount": "unlimited",
+  "tradable_balance_ratio": 0.99,
+  "fiat_display_currency": "USD",
+  "dry_run": true,
+  "dry_run_wallet": 2000,
+  "cancel_open_orders_on_exit": false,
+  "trading_mode": "spot",
+  "margin_mode": "",
+  "unfilledtimeout": {
+    "entry": 10,
+    "exit": 10,
+    "exit_timeout_count": 0,
+    "unit": "minutes"
+  },
+  "entry_pricing": {
+    "price_side": "same",
+    "use_order_book": true,
+    "order_book_top": 1,
+    "price_last_balance": 0.0,
+    "check_depth_of_market": {
+      "enabled": false,
+      "bids_to_ask_delta": 1
     }
+  },
+  "exit_pricing": {
+    "price_side": "same",
+    "use_order_book": true,
+    "order_book_top": 1
+  },
+  "exchange": {
+    "name": "binance",
+    "key": "",
+    "secret": "",
+    "ccxt_config": {},
+    "ccxt_async_config": {},
+    "pair_whitelist": ["BTC/USDT", "ETH/USDT"],
+    "pair_blacklist": []
+  },
+  "pairlists": [
+    {
+      "method": "StaticPairList"
+    }
+  ],
+  "freqaimodel": "LightGBMClassifier",
+  "freqai": {
+    "enabled": true,
+    "purge_old_models": 2,
+    "train_period_days": 60,
+    "backtest_period_days": 15,
+    "live_retrain_hours": 24,
+    "identifier": "mid_tf_classifier",
+    "feature_parameters": {
+      "include_timeframes": ["4h", "1d"],
+      "include_corr_pairlist": ["BTC/USDT", "ETH/USDT"],
+      "label_period_candles": 12,
+      "include_shifted_candles": 3,
+      "DI_threshold": 0.95,
+      "weight_factor": 0.9,
+      "principal_component_analysis": false,
+      "use_SVM_to_remove_outliers": true,
+      "indicator_periods_candles": [10, 20, 50],
+      "plot_feature_importances": 0
+    },
+    "data_split_parameters": {
+      "test_size": 0.25,
+      "random_state": 42
+    },
+    "model_training_parameters": {
+      "n_estimators": 500,
+      "learning_rate": 0.05
+    }
+  },
+  "telegram": {
+    "enabled": false,
+    "token": "",
+    "chat_id": ""
+  },
+  "api_server": {
+    "enabled": true,
+    "listen_ip_address": "0.0.0.0",
+    "listen_port": 8083,
+    "verbosity": "error",
+    "enable_openapi": false,
+    "jwt_secret_key": "69c35653a1d2e719e4218fc117d4a96e3acd6626a79934158d9aac2d3622aea6",
+    "ws_token": "0gcjZ-Glbpgkn2iMCGzoAtswRbAlzFlL6w",
+    "CORS_origins": [
+      "http://localhost:8080",
+      "http://localhost:8082",
+      "http://localhost:8083",
+      "http://localhost:8084",
+      "http://localhost:8085",
+      "http://localhost:8086",
+      "http://localhost:8087",
+      "http://localhost:8088",
+      "http://localhost:8089",
+      "http://localhost:8090",
+      "http://localhost:8091"
+    ],
+    "username": "sonyto0o",
+    "password": "3715"
+  },
+  "bot_name": "mid_tf_ai_bot",
+  "initial_state": "running",
+  "force_entry_enable": false,
+  "internals": {
+    "process_throttle_secs": 5
+  }
 }
